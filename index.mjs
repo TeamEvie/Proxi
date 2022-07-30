@@ -22,6 +22,10 @@ const api = new REST({ rejectOnRateLimit: () => true, retries: 0 }).setToken(
   process.env.DISCORD_TOKEN
 );
 
+api.on("response", (req) => {
+  console.log(`[${req.method}] ${req.path}`);
+});
+
 const server = createServer(async (req, res) => {
   const { method, url } = req;
   if (!method || !url) {
@@ -50,6 +54,13 @@ const server = createServer(async (req, res) => {
     });
 
     if (fullRoute.includes("/gateway/bot") && process.env.DISCORD_GATEWAY) {
+      for (const header of Object.keys(discordResponse.headers)) {
+        if (header.startsWith("x-ratelimit")) {
+          continue;
+        }
+        // @ts-ignore
+        res.setHeader(header, discordResponse.headers[header]);
+      }
       res.write(
         JSON.stringify({
           ...(await discordResponse.body.json()),
