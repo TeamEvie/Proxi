@@ -65,6 +65,7 @@ const server = createServer(async (req, res) => {
         JSON.stringify({
           ...(await discordResponse.body.json()),
           url: process.env.DISCORD_GATEWAY,
+          shards: 1
         })
       );
 
