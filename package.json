@@ -1,0 +1,11 @@
+{
+  "name": "Proxi",
+  "version": "1.0.0",
+  "main": "index.mjs",
+  "repository": "https://github.com/TeamEvie/Proxi",
+  "author": "tristan <contact@tristancamejo.com>",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@discordjs/proxy": "^1.0.0"
+  }
+}
